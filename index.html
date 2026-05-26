@@ -284,6 +284,90 @@
       color: rgba(242,233,225,0.4); font-family: 'Space Mono', monospace;
       margin-bottom: 16px; display: block;
     }
+
+    /* ══════════════════════════════════════════
+       MOBILE — max-width: 768px
+    ══════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* Nav */
+      nav { padding: 12px 20px !important; }
+      nav a[href="#"] { font-size: 13px !important; }
+
+      /* Menu overlay */
+      #menu-overlay { padding: 24px 24px; }
+
+      /* Hero */
+      #hero-wrapper { height: 150vh; }
+      #hero-text { padding: 0 20px !important; }
+      .hero-headline { font-size: clamp(38px, 11vw, 68px) !important; }
+      #hero-desc { left: 20px !important; bottom: 80px !important; max-width: 200px !important; }
+      #hero-photo-wrap { width: 42% !important; right: 10px !important; top: 10px !important; bottom: 10px !important; }
+
+      /* About / Summary */
+      #about { padding: 40px 20px !important; }
+      #about > div { grid-template-columns: 1fr !important; gap: 20px !important; }
+
+      /* Projects header */
+      #projects > div:first-child { padding: 32px 20px 24px !important; flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+      #projects > div:first-child p { max-width: 100% !important; }
+
+      /* Projects cards grid */
+      #projects > div:nth-child(2) { grid-template-columns: 1fr !important; padding: 20px !important; gap: 16px !important; }
+
+      /* GitHub button under projects */
+      #projects > div:nth-child(3) { padding: 0 20px 40px !important; }
+
+      /* Experience */
+      #experience { padding-top: 40px !important; }
+      #experience > div:first-child { padding: 0 20px 28px !important; flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
+      #experience > div:first-child p { display: none !important; }
+      #experience > div:nth-child(2) { flex-direction: column !important; padding-bottom: 40px !important; min-height: unset !important; }
+      #expInfoPanel { width: 100% !important; padding: 0 20px 24px !important; }
+      #expScene { height: 320px !important; }
+      .exp-card { width: 260px !important; height: 160px !important; }
+
+      /* AI & Tooling split */
+      section.ai-split { grid-template-columns: 1fr !important; }
+      section.ai-split > div:first-child { min-height: 280px !important; }
+      section.ai-split > div:last-child { padding: 40px 20px !important; }
+
+      /* Education */
+      #education > div:first-child { padding: 32px 20px 24px !important; }
+      #eduTrack { padding: 0 20px !important; gap: 12px !important; }
+      #eduTrack > div[style*="flex:0 0 340px"] { flex: 0 0 280px !important; }
+
+      /* Skills header */
+      #skills > div:first-child { padding: 32px 20px 24px !important; }
+      /* Skills columns */
+      #skills > div:last-child { grid-template-columns: 1fr !important; }
+      #skills > div:last-child > div { border-right: none !important; border-bottom: 1px solid rgba(16,16,16,0.1) !important; padding: 24px 20px !important; }
+      #skills > div:last-child > div:last-child { border-bottom: none !important; }
+
+      /* Courses & Achievements */
+      .cert-section { padding: 40px 20px !important; }
+      .cert-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+
+      /* Volunteering */
+      .vol-header { padding: 32px 20px 24px !important; }
+      .vol-grid { grid-template-columns: 1fr !important; }
+      .vol-grid > div { border-right: none !important; border-bottom: 1px solid rgba(16,16,16,0.1) !important; padding: 24px 20px !important; }
+      .vol-grid > div:last-child { border-bottom: none !important; }
+
+      /* Languages */
+      .lang-section { padding: 40px 20px !important; }
+      .lang-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+
+      /* Motivation / Podcast */
+      .motivation-section { padding: 40px 20px !important; }
+      .motivation-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+      .motivation-grid > div:first-child { aspect-ratio: 16/9 !important; width: 100% !important; }
+
+      /* Footer nav */
+      footer { padding: 0 20px !important; }
+      .footer-contact-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+      .footer-contact-grid > div:last-child { align-items: flex-start !important; }
+    }
   </style>
 </head>
 <body class="font-sans text-onyx bg-white" style="color:#101010;">
@@ -540,7 +624,7 @@
   <!-- ════════════════════════════════════════════════════
        SPLIT — "TOMORROW SHOULD BE BETTER" equivalent
   ════════════════════════════════════════════════════ -->
-  <section style="display:grid; grid-template-columns:1fr 1fr; min-height:500px; border-top:1px solid #101010;">
+  <section class="ai-split" style="display:grid; grid-template-columns:1fr 1fr; min-height:500px; border-top:1px solid #101010;">
 
     <!-- LEFT: two tool logos, diagonally overlapping -->
     <div style="background:#101010; position:relative; overflow:hidden;">
@@ -731,9 +815,9 @@
   <!-- ════════════════════════════════════════════════════
        CERTIFICATIONS & ACHIEVEMENTS
   ════════════════════════════════════════════════════ -->
-  <section style="background:#F2E9E1; padding:80px 64px; border-top:1px solid rgba(16,16,16,0.15);">
+  <section class="cert-section" style="background:#F2E9E1; padding:80px 64px; border-top:1px solid rgba(16,16,16,0.15);">
     <h2 class="section-h2" style="margin-bottom:56px;">COURSES &amp;<br>ACHIEVEMENTS</h2>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px;">
+    <div class="cert-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:64px;">
       <div style="display:flex; flex-direction:column; gap:24px;">
         <!-- photo -->
         <div style="width:100%; aspect-ratio:4/3; border-radius:14px; overflow:hidden; background:#d8cfc6;">
@@ -768,11 +852,11 @@
        VOLUNTEERING — DrawHistory card grid
   ════════════════════════════════════════════════════ -->
   <section style="border-top:1px solid rgba(16,16,16,0.1);">
-    <div style="padding: 52px 64px 48px; border-bottom: 1px solid rgba(16,16,16,0.1);">
+    <div class="vol-header" style="padding: 52px 64px 48px; border-bottom: 1px solid rgba(16,16,16,0.1);">
       <span class="dh-label">Community</span>
       <h2 class="section-h2">VOLUNTEERING</h2>
     </div>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr);">
+    <div class="vol-grid" style="display:grid; grid-template-columns:repeat(3,1fr);">
       <div style="padding:32px 28px; border-right:1px solid rgba(16,16,16,0.1);">
         <span style="font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(16,16,16,0.35); font-family:'Space Mono',monospace; display:block; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(16,16,16,0.08);">06/2019 – 06/2021</span>
         <h3 style="font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:-0.01em; margin-bottom:6px;">International Officer</h3>
@@ -795,8 +879,8 @@
   <!-- ════════════════════════════════════════════════════
        LANGUAGES & ADDITIONAL SKILLS
   ════════════════════════════════════════════════════ -->
-  <section style="background:#E1D3C7; padding:72px 64px; border-top:1px solid rgba(16,16,16,0.12);">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px;">
+  <section class="lang-section" style="background:#E1D3C7; padding:72px 64px; border-top:1px solid rgba(16,16,16,0.12);">
+    <div class="lang-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:64px;">
       <div>
         <p style="color:#FF6714; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; font-family:'Space Mono',monospace; margin-bottom:36px;">Languages</p>
         <div style="border-bottom:1px solid rgba(16,16,16,0.15); padding:16px 0; display:flex; justify-content:space-between; align-items:center;">
@@ -825,11 +909,11 @@
   <!-- ════════════════════════════════════════════════════
        MOTIVATION — podcast recommendation
   ════════════════════════════════════════════════════ -->
-  <section style="padding:72px 64px; border-top:1px solid rgba(16,16,16,0.1);">
+  <section class="motivation-section" style="padding:72px 64px; border-top:1px solid rgba(16,16,16,0.1);">
     <span class="dh-label">Motivation</span>
     <h2 style="font-size:clamp(28px,3.5vw,48px); font-weight:700; text-transform:uppercase; letter-spacing:-0.03em; margin-bottom:48px; line-height:1;">PODCAST RECOMMENDATION.</h2>
 
-    <div style="display:grid; grid-template-columns:480px 1fr; gap:48px; align-items:start;">
+    <div class="motivation-grid" style="display:grid; grid-template-columns:480px 1fr; gap:48px; align-items:start;">
 
       <!-- image -->
       <div style="border-radius:14px; overflow:hidden; aspect-ratio:16/9; background:#FF6714;">
@@ -867,7 +951,7 @@
     </nav>
 
     <!-- contact details row -->
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; padding:56px 0 48px; border-top:1px solid rgba(242,233,225,0.1); margin-top:20px;">
+    <div class="footer-contact-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; padding:56px 0 48px; border-top:1px solid rgba(242,233,225,0.1); margin-top:20px;">
       <div>
         <h2 style="font-size:clamp(40px,4.5vw,64px); font-weight:700; text-transform:uppercase; letter-spacing:-0.04em; line-height:0.9; color:#F2E9E1; margin-bottom:20px;">LET'S CONNECT.</h2>
         <p style="color:rgba(242,233,225,0.5); font-size:14px; max-width:280px; line-height:1.7; font-family:'Space Mono',monospace;">
