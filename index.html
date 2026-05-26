@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jakub Kmeť</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'sage-dark': '#3D3B2F',
+            'warm-sand': '#F2E9E1',
+            'wet-sand': '#E1D3C7',
+            'onyx': '#101010',
+            'orange-flair': '#FF6714',
+          },
+          fontFamily: {
+            sans: ['"DM Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            mono: ['"Space Mono"', 'ui-monospace', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    * { -webkit-font-smoothing: antialiased; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    /* ── dot pattern ── */
+    .dot-pattern {
+      background-image: radial-gradient(circle, rgba(242,233,225,0.10) 1px, transparent 1px);
+      background-size: 26px 26px;
+    }
+
+    /* ── hamburger menu overlay ── */
+    #menu-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: #3D3B2F;
+      display: flex; flex-direction: column;
+      padding: 40px 60px;
+      overflow: hidden;
+      transform: translateY(-110%);
+      transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    #menu-overlay.open { transform: translateY(0); }
+    .mono { font-family: 'Space Mono', ui-monospace, monospace; }
+
+    .menu-link {
+      font-size: clamp(40px, 7vw, 88px);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #F2E9E1;
+      text-decoration: none;
+      display: block;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(242,233,225,0.12);
+      transition: color 0.15s;
+    }
+    .menu-link:hover { color: #FF6714; }
+
+    /* ── hero ── */
+    #hero-wrapper {
+      height: 200vh;
+      position: relative;
+    }
+    #hero {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      background: #3D3B2F;
+      overflow: hidden;
+    }
+    /* Headline: absolutely centered in hero, full width */
+    #hero-text {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      text-align: left;
+      padding: 0 80px;
+      z-index: 3;
+      will-change: opacity, transform;
+      /* transform set by JS: translateY(calc(-50% + drift)) */
+    }
+    /* Description: static at bottom-left */
+    #hero-desc {
+      position: absolute;
+      bottom: 56px;
+      left: 56px;
+      z-index: 3;
+      max-width: 280px;
+    }
+    /* Photo: smaller initially (36%), gaps on all sides → visible rounded corners */
+    #hero-photo-wrap {
+      position: absolute;
+      right: 28px;
+      top: 28px;
+      bottom: 28px;
+      width: 36%;
+      z-index: 1;
+    }
+    #hero-photo-container {
+      width: 100%;
+      height: 100%;
+      border-radius: 32px;
+      overflow: hidden;
+      will-change: border-radius;
+    }
+    #hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(0.82);
+      transform-origin: center center;
+      will-change: transform;
+      border-radius: 32px;
+    }
+    .hero-headline {
+      font-size: clamp(68px, 9vw, 130px);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      word-spacing: 0.18em;
+      line-height: 0.88;
+      color: #F2E9E1;
+    }
+
+    /* ── section headings ── */
+    .section-h2 {
+      font-size: clamp(44px, 6vw, 80px);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+    }
+    .section-h3 {
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 0.92;
+    }
+
+    /* ── latest grid ── */
+    .latest-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 0;
+    }
+    .latest-card {
+      border: 1px solid #e5e5e5;
+      overflow: hidden;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .latest-card:hover { background: #fafafa; }
+    .latest-card-img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
+    }
+    .latest-card-tall { grid-row: span 2; }
+    .latest-card-tall .latest-card-img { aspect-ratio: auto; height: 100%; min-height: 300px; }
+
+    /* ── skill tags ── */
+    .skill-tag {
+      display: inline-block;
+      border: 1px solid #101010;
+      padding: 5px 16px;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      margin: 4px 4px 4px 0;
+      font-family: 'Space Mono', ui-monospace, monospace;
+    }
+
+    /* ── lang dots ── */
+    .dot { display:inline-block; width:9px; height:9px; border-radius:50%; background:#101010; margin-right:3px; }
+    .dot.empty { background:transparent; border:1px solid #101010; }
+
+    /* ── buttons ── */
+    .btn {
+      display: inline-block; padding: 11px 26px;
+      font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+      border: 1px solid; transition: background 0.15s, color 0.15s;
+      font-family: 'Space Mono', ui-monospace, monospace;
+    }
+    .btn-orange { border-color: #FF6714; color: #FF6714; }
+    .btn-orange:hover { background: #FF6714; color: #fff; }
+    .btn-sand { border-color: rgba(242,233,225,0.55); color: #F2E9E1; }
+    .btn-sand:hover { background: #F2E9E1; color: #3D3B2F; }
+
+    /* ── rule ── */
+    .rule-dark { border-top: 1px solid #101010; }
+    .rule-light { border-top: 1px solid rgba(242,233,225,0.18); }
+
+    /* ── split section ── */
+    .split-img { width:100%; height:100%; object-fit:cover; display:block; min-height:420px; }
+
+    /* ── stacked card fan ── */
+    .exp-card {
+      position:absolute;
+      width:520px; height:300px;
+      border-radius:20px;
+      /* transforms set entirely via JS — no CSS transform here to avoid conflicts */
+      transition:transform 0.42s cubic-bezier(0.23,1,0.32,1), box-shadow 0.42s ease;
+      box-shadow:0 18px 56px rgba(0,0,0,0.22);
+      overflow:hidden;
+      cursor:pointer;
+    }
+    .exp-card.is-active {
+      box-shadow:0 52px 140px rgba(0,0,0,0.55);
+      cursor:default;
+    }
+    .exp-card-info {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:20px 24px;
+      background:linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0) 100%);
+    }
+
+    /* ── DrawHistory column grid overlay ── */
+    .dh-grid {
+      position: relative;
+    }
+    .dh-grid::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent calc(33.33% - 0.5px), rgba(16,16,16,0.07) calc(33.33%), transparent calc(33.33% + 0.5px)),
+        linear-gradient(90deg, transparent calc(66.66% - 0.5px), rgba(16,16,16,0.07) calc(66.66%), transparent calc(66.66% + 0.5px));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── DrawHistory card ── */
+    .dh-card { display: flex; flex-direction: column; border-radius: 16px; overflow: hidden; border: 1px solid rgba(16,16,16,0.1); }
+    .dh-card-label {
+      font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(16,16,16,0.45); padding: 18px 28px;
+      border-bottom: 1px solid rgba(16,16,16,0.1);
+      font-family: 'Space Mono', monospace;
+    }
+    .dh-card-media { overflow: hidden; }
+    .dh-card-body { padding: 24px 28px 32px; flex: 1; }
+
+    /* ── large footer nav links ── */
+    .footer-nav-link {
+      font-size: clamp(32px, 4.5vw, 60px);
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: -0.03em; color: #F2E9E1;
+      text-decoration: none; display: block;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(242,233,225,0.1);
+      transition: color 0.15s; line-height: 1;
+    }
+    .footer-nav-link:hover { color: #FF6714; }
+
+    /* ── email CTA input ── */
+    .email-cta-input {
+      width: 100%; background: none; border: none;
+      border-bottom: 1px solid rgba(16,16,16,0.18);
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 300; color: rgba(16,16,16,0.25);
+      padding: 10px 0; outline: none;
+      font-family: 'DM Sans', sans-serif;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .email-cta-input::placeholder { color: rgba(16,16,16,0.2); }
+    .email-cta-input:focus { color: #101010; border-bottom-color: #101010; }
+
+    /* ── section label plain (DrawHistory style) ── */
+    .dh-label {
+      font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(16,16,16,0.4); font-family: 'Space Mono', monospace;
+      margin-bottom: 16px; display: block;
+    }
+    .dh-label-light {
+      font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(242,233,225,0.4); font-family: 'Space Mono', monospace;
+      margin-bottom: 16px; display: block;
+    }
+  </style>
+</head>
+<body class="font-sans text-onyx bg-white" style="color:#101010;">
+
+  <!-- ════════════════════════════════════════════════════
+       MENU OVERLAY
+  ════════════════════════════════════════════════════ -->
+  <div id="menu-overlay">
+    <div class="flex justify-between items-center mb-12">
+      <a href="#" onclick="closeMenu()" class="text-warm-sand font-semibold text-lg tracking-wide uppercase" style="color:#F2E9E1;">Jakub Kmeť</a>
+      <button onclick="closeMenu()" class="text-warm-sand text-3xl leading-none" style="color:#F2E9E1; background:none; border:none; cursor:pointer;">✕</button>
+    </div>
+    <nav class="flex-1 flex flex-col justify-center">
+      <a href="#about"      class="menu-link" onclick="closeMenu()">About</a>
+      <a href="#projects"   class="menu-link" onclick="closeMenu()">Projects</a>
+      <a href="#experience" class="menu-link" onclick="closeMenu()">Experience</a>
+      <a href="#education"  class="menu-link" onclick="closeMenu()">Education</a>
+      <a href="#skills"     class="menu-link" onclick="closeMenu()">Skills</a>
+      <a href="#contact"    class="menu-link" onclick="closeMenu()">Contact</a>
+    </nav>
+    <div class="mt-12 flex gap-8" style="color:rgba(242,233,225,0.4); font-size:13px; letter-spacing:0.12em; text-transform:uppercase;">
+      <a href="https://www.linkedin.com/in/jakub-kme%C5%A5" style="color:rgba(242,233,225,0.4);" onmouseover="this.style.color='#FF6714'" onmouseout="this.style.color='rgba(242,233,225,0.4)'">LinkedIn</a>
+      <a href="mailto:jakub.kmet13@gmail.com" style="color:rgba(242,233,225,0.4);" onmouseover="this.style.color='#FF6714'" onmouseout="this.style.color='rgba(242,233,225,0.4)'">Email</a>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════
+       NAV — logo left, hamburger right (no top strip)
+  ════════════════════════════════════════════════════ -->
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:100; background:#3D3B2F; padding:14px 56px; display:flex; justify-content:space-between; align-items:center;">
+    <a href="#" style="color:#F2E9E1; font-size:15px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none;">Jakub Kmeť</a>
+    <button id="hamburger" onclick="openMenu()" aria-label="Open menu"
+      style="background:none; border:none; cursor:pointer; display:flex; flex-direction:column; gap:5px; padding:4px;">
+      <span style="display:block; width:26px; height:1.5px; background:#F2E9E1;"></span>
+      <span style="display:block; width:26px; height:1.5px; background:#F2E9E1;"></span>
+      <span style="display:block; width:18px; height:1.5px; background:#F2E9E1;"></span>
+    </button>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════
+       HERO  (sticky wrapper = scroll space for animation)
+  ════════════════════════════════════════════════════ -->
+  <div id="hero-wrapper">
+    <section id="hero" class="dot-pattern">
+
+      <!-- CENTERED HEADLINE -->
+      <div id="hero-text">
+        <h1 class="hero-headline">
+          BASED ON LAW<br />DRIVEN BY TECH.
+        </h1>
+      </div>
+
+      <!-- DESCRIPTION — bottom-left, static -->
+      <div id="hero-desc">
+        <div class="rule-light" style="margin:0 0 20px; max-width:200px;"></div>
+        <p style="color:rgba(242,233,225,0.62); font-size:14px; line-height:1.68; font-family:'Space Mono',monospace;">
+          Law graduate with a physics background and growing interest in tech. Fascinated by how AI is reshaping physical systems — from contract analysis to autonomous warehouse operations.
+        </p>
+      </div>
+
+      <!-- PHOTO — right side, smaller initially, gaps on all sides = rounded corners -->
+      <div id="hero-photo-wrap">
+        <div id="hero-photo-container">
+          <!-- Replace src with your photo path -->
+          <img
+            id="hero-img"
+            src="images/profile.jpg"
+            onerror="this.src='https://placehold.co/800x1100/c8bfb0/3d3b2f?text=JK'"
+            alt="Jakub Kmeť"
+          />
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════
+       SUMMARY — right below hero
+  ════════════════════════════════════════════════════ -->
+  <section id="about" style="padding:72px 64px; border-top:1px solid #101010;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start;">
+      <div>
+        <span class="dh-label">Who I Am</span>
+        <h2 class="section-h2">SUMMARY</h2>
+      </div>
+      <div style="padding-top:4px;">
+        <p style="font-size:14px; line-height:1.85; color:#101010; font-family:'Space Mono',monospace;">
+          Law trained me to break down complex systems, identify failure points, and communicate decisions clearly — skills I now apply to building AI products. I've spent the last few years doing hands-on legal work across M&amp;A, litigation, and corporate law, while independently building tools in automation and AI. I'm drawn to roles where the problem is physical, the solution is software, and the iteration is fast.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       MY PROJECTS — DrawHistory card grid
+  ════════════════════════════════════════════════════ -->
+  <section id="projects" style="border-top: 1px solid #101010;">
+
+    <!-- section header -->
+    <div style="padding: 52px 64px 48px; border-bottom: 1px solid #101010; display:flex; justify-content:space-between; align-items:flex-end;">
+      <div>
+        <span class="dh-label">Selected Work</span>
+        <h2 class="section-h2">MY PROJECTS</h2>
+      </div>
+      <p style="font-size:14px; line-height:1.75; color:#101010; font-family:'Space Mono',monospace; max-width:360px; padding-bottom:4px;">
+        Prototypes, tools and applications built at the intersection of law, AI, and automation — turning complex workflows into simple interfaces.
+      </p>
+    </div>
+
+    <!-- three cards — gap + rounded corners -->
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; padding:32px 64px 64px;">
+
+      <!-- card 1 — Warehouse OS -->
+      <div class="dh-card">
+        <div class="dh-card-label">Robotics &amp; Automation</div>
+        <div class="dh-card-media" style="aspect-ratio:4/3; background:#0a0a0a;">
+          <img src="images/project-warehouse.png" alt="Warehouse OS" style="width:100%; height:100%; object-fit:cover; display:block;" />
+        </div>
+        <div class="dh-card-body">
+          <h3 style="font-size:20px; font-weight:700; text-transform:uppercase; letter-spacing:-0.02em; margin-bottom:10px; line-height:1.05;">Warehouse OS</h3>
+          <p style="font-size:13px; color:#101010; line-height:1.7; font-family:'Space Mono',monospace; margin-bottom:20px;">Real-time warehouse simulation with autonomous robot routing. Built to explore how AI decision-making can coordinate multi-agent systems in constrained logistics environments — what routes, what priorities, what happens when one robot fails.</p>
+          <a href="https://warehouseapp-s.netlify.app/" target="_blank" class="btn btn-orange">View Project →</a>
+        </div>
+      </div>
+
+      <!-- card 2 — Feedback AI -->
+      <div class="dh-card">
+        <div class="dh-card-label">AI Tooling</div>
+        <div class="dh-card-media" style="aspect-ratio:4/3; background:#0a0a0a;">
+          <img src="images/project-feedback.png" alt="Feedback AI" style="width:100%; height:100%; object-fit:cover; display:block;" />
+        </div>
+        <div class="dh-card-body">
+          <h3 style="font-size:20px; font-weight:700; text-transform:uppercase; letter-spacing:-0.02em; margin-bottom:10px; line-height:1.05;">Feedback AI</h3>
+          <p style="font-size:13px; color:#101010; line-height:1.7; font-family:'Space Mono',monospace; margin-bottom:20px;">Built to solve a specific ops problem: gathering structured feedback from non-technical users without friction. Create projects, share form links, and analyse AI-processed responses in one place.</p>
+          <a href="https://feedback-ai-khaki.vercel.app/dashboard" target="_blank" class="btn btn-orange">View Project →</a>
+        </div>
+      </div>
+
+      <!-- card 3 — LexScan -->
+      <div class="dh-card">
+        <div class="dh-card-label">Legal Tech</div>
+        <div class="dh-card-media" style="aspect-ratio:4/3; background:#f5f5f5;">
+          <img src="images/project-lexscan.png" alt="LexScan" style="width:100%; height:100%; object-fit:cover; display:block;" />
+        </div>
+        <div class="dh-card-body">
+          <h3 style="font-size:20px; font-weight:700; text-transform:uppercase; letter-spacing:-0.02em; margin-bottom:10px; line-height:1.05;">LexScan</h3>
+          <p style="font-size:13px; color:#101010; line-height:1.7; font-family:'Space Mono',monospace; margin-bottom:20px;">AI-powered contract analysis. Upload PDF or DOCX and get instant legal insights — risks, obligations, key clauses.</p>
+          <a href="https://lexscan.streamlit.app/" target="_blank" class="btn btn-orange">View Project →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       MY LATEST  — stacked card fan
+  ════════════════════════════════════════════════════ -->
+  <section id="experience" style="padding-top:72px; border-top:1px solid #101010; overflow:hidden;">
+    <div style="padding:0 64px 52px; display:flex; justify-content:space-between; align-items:flex-end;">
+      <div>
+        <span class="dh-label">Work Experience</span>
+        <h2 class="section-h2">MY LATEST</h2>
+      </div>
+      <p style="font-size:13px; font-family:'Space Mono',monospace; color:rgba(16,16,16,0.38); letter-spacing:0.08em;">CLICK A CARD TO EXPLORE</p>
+    </div>
+
+    <!-- two-column body: info panel + card fan -->
+    <div style="display:flex; align-items:center; padding-bottom:100px; min-height:520px;">
+
+      <!-- LEFT: info panel (hidden until card selected) -->
+      <div id="expInfoPanel" style="width:380px; flex-shrink:0; padding:0 48px 0 64px; opacity:0; transition:opacity 0.38s ease; pointer-events:none;">
+        <span id="expITag" style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-family:'Space Mono',monospace;color:rgba(16,16,16,0.4);display:block;margin-bottom:12px;"></span>
+        <h3 id="expIRole" style="font-size:clamp(20px,2.2vw,30px);font-weight:700;text-transform:uppercase;letter-spacing:-0.03em;line-height:1;margin-bottom:8px;color:#101010;"></h3>
+        <p id="expICompany" style="font-size:14px;font-weight:600;color:#FF6714;margin-bottom:4px;font-family:'Space Mono',monospace;"></p>
+        <p id="expIDate" style="font-size:12px;font-family:'Space Mono',monospace;color:rgba(16,16,16,0.42);margin-bottom:18px;"></p>
+        <div style="border-top:1px solid rgba(16,16,16,0.1);margin-bottom:18px;"></div>
+        <p id="expIDesc" style="font-size:13px;line-height:1.8;color:#101010;margin-bottom:0;font-family:'Space Mono',monospace;display:-webkit-box;-webkit-line-clamp:4;line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;"></p>
+        <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:24px;">
+          <button onclick="openExpFromPanel()" class="btn btn-orange" style="font-size:12px;">Full Details →</button>
+          <button onclick="deselectExpCard()" style="background:none;border:none;cursor:pointer;font-size:12px;color:rgba(16,16,16,0.38);font-family:'Space Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;padding:0;transition:color 0.15s;" onmouseenter="this.style.color='#101010'" onmouseleave="this.style.color='rgba(16,16,16,0.38)'">× Close</button>
+        </div>
+      </div>
+
+      <!-- RIGHT: 3D card fan -->
+      <div id="expScene" style="flex:1; position:relative; perspective:1100px; perspective-origin:50% 65%; height:560px; transform-style:preserve-3d; overflow:visible; cursor:default;">
+
+        <!-- card 0: Junior Associate -->
+        <div class="exp-card" data-ci="0" style="--ci:0; top:120px; left:calc(50% - 420px); background:#F5EFE4;">
+          <img src="images/f8818cd-logocmyk-1.jpg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);width:72%;height:auto;" />
+          <div class="exp-card-info">
+            <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-family:'Space Mono',monospace;color:rgba(255,255,255,0.38);display:block;margin-bottom:5px;">08/2023 – 10/2024</span>
+            <div style="font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:-0.02em;color:#fff;line-height:1.1;margin-bottom:3px;">Junior Associate</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);font-family:'Space Mono',monospace;">Hillbridges</div>
+          </div>
+        </div>
+
+        <!-- card 1: Student Associate -->
+        <div class="exp-card" data-ci="1" style="--ci:1; top:120px; left:calc(50% - 420px); background:#EDE7DC;">
+          <img src="images/f8818cd-logocmyk-1.jpg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);width:72%;height:auto;" />
+          <div class="exp-card-info">
+            <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-family:'Space Mono',monospace;color:rgba(255,255,255,0.38);display:block;margin-bottom:5px;">04/2023 – 07/2023</span>
+            <div style="font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:-0.02em;color:#fff;line-height:1.1;margin-bottom:3px;">Student Associate</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);font-family:'Space Mono',monospace;">Hillbridges</div>
+          </div>
+        </div>
+
+        <!-- card 2: Paralegal -->
+        <div class="exp-card" data-ci="2" style="--ci:2; top:120px; left:calc(50% - 420px); background:#111111;">
+          <img src="images/HP_EN_logo_inverzni-768x400.jpg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72%;height:auto;" />
+          <div class="exp-card-info">
+            <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-family:'Space Mono',monospace;color:rgba(255,255,255,0.38);display:block;margin-bottom:5px;">10/2021 – 02/2022</span>
+            <div style="font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:-0.02em;color:#fff;line-height:1.1;margin-bottom:3px;">Paralegal</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);font-family:'Space Mono',monospace;">HAVEL &amp; Partners</div>
+          </div>
+        </div>
+
+        <!-- card 3: Sales Specialist -->
+        <div class="exp-card" data-ci="3" style="--ci:3; top:120px; left:calc(50% - 420px); background:#D4560E;">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><span style="font-size:88px;font-weight:700;color:rgba(255,255,255,0.12);font-family:'DM Sans',sans-serif;letter-spacing:-0.04em;">NEO</span></div>
+          <div class="exp-card-info">
+            <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-family:'Space Mono',monospace;color:rgba(255,255,255,0.38);display:block;margin-bottom:5px;">09/2019 – 01/2020</span>
+            <div style="font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:-0.02em;color:#fff;line-height:1.1;margin-bottom:3px;">Sales Specialist</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);font-family:'Space Mono',monospace;">NeoHealth s.r.o.</div>
+          </div>
+        </div>
+
+      </div><!-- /expScene -->
+    </div><!-- /two-column -->
+
+    <!-- fullscreen detail overlay (opened from info panel "Full Details" button) -->
+    <div id="expOverlay" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(255,255,255,0.97); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); opacity:0; transition:opacity 0.3s;">
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:40px 80px;">
+        <div style="display:flex;gap:60px;align-items:center;max-width:880px;width:100%;">
+          <div id="expVis" style="width:280px;height:360px;border-radius:18px;overflow:hidden;flex-shrink:0;box-shadow:0 24px 64px rgba(0,0,0,0.22);position:relative;"></div>
+          <div style="flex:1;">
+            <span id="expDTag" style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-family:'Space Mono',monospace;color:rgba(16,16,16,0.4);display:block;margin-bottom:14px;"></span>
+            <h2 id="expDRole" style="font-size:clamp(26px,3vw,40px);font-weight:700;text-transform:uppercase;letter-spacing:-0.03em;line-height:1;margin-bottom:10px;color:#101010;"></h2>
+            <p id="expDCompany" style="font-size:15px;font-weight:600;color:#FF6714;margin-bottom:5px;"></p>
+            <p id="expDDate" style="font-size:12px;font-family:'Space Mono',monospace;color:rgba(16,16,16,0.42);margin-bottom:26px;"></p>
+            <p id="expDDesc" style="font-size:14px;line-height:1.85;color:#101010;"></p>
+          </div>
+        </div>
+      </div>
+      <button onclick="closeExpCard()" style="position:absolute;top:20px;right:24px;background:none;border:none;font-size:22px;line-height:1;color:rgba(16,16,16,0.4);cursor:pointer;padding:6px;transition:color 0.2s;" onmouseenter="this.style.color='#101010'" onmouseleave="this.style.color='rgba(16,16,16,0.4)'">×</button>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SPLIT — "TOMORROW SHOULD BE BETTER" equivalent
+  ════════════════════════════════════════════════════ -->
+  <section style="display:grid; grid-template-columns:1fr 1fr; min-height:500px; border-top:1px solid #101010;">
+
+    <!-- LEFT: two tool logos, diagonally overlapping -->
+    <div style="background:#101010; position:relative; overflow:hidden;">
+
+      <!-- Anthropic (top-left) -->
+      <div style="position:absolute; top:50%; left:50%;
+                  transform:translate(calc(-50% - 110px), calc(-50% - 110px));
+                  width:290px; height:290px;
+                  background:#fff; border-radius:24px;
+                  display:flex; align-items:center; justify-content:center;
+                  padding:44px; z-index:1;
+                  box-shadow:0 24px 64px rgba(0,0,0,0.5);">
+        <img src="images/images (2).png" alt="Anthropic" style="width:100%; height:auto;" />
+      </div>
+
+      <!-- OpenAI (bottom-right) -->
+      <div style="position:absolute; top:50%; left:50%;
+                  transform:translate(calc(-50% + 110px), calc(-50% + 110px));
+                  width:290px; height:290px;
+                  background:#fff; border-radius:24px;
+                  display:flex; align-items:center; justify-content:center;
+                  padding:44px; z-index:2;
+                  box-shadow:0 24px 64px rgba(0,0,0,0.5);">
+        <img src="images/images (3).png" alt="OpenAI" style="width:100%; height:auto;" />
+      </div>
+
+    </div>
+
+    <!-- RIGHT: text -->
+    <div style="background:#F2E9E1; padding:72px 64px; display:flex; flex-direction:column; justify-content:center;">
+      <p style="color:#FF6714; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; font-family:'Space Mono',monospace; margin-bottom:24px;">AI & Tooling</p>
+      <h2 class="section-h3" style="margin-bottom:28px; max-width:440px;">
+        PART OF THE TECHNOLOGICAL REVOLUTION.
+      </h2>
+      <p style="font-size:14px; color:#101010; line-height:1.7; max-width:340px; margin-bottom:36px; font-family:'Space Mono',monospace;">
+        I use Claude and GPT-4 not just as chat tools but as prototyping partners — scoping problems, generating data models, and iterating on solutions before writing a single line of production code. Contract risk extraction in under 2 days (LexScan). Warehouse routing simulation built in a weekend (Warehouse OS).
+      </p>
+      <a href="mailto:jakub.kmet13@gmail.com" class="btn btn-orange" style="align-self:flex-start;">Get in Touch →</a>
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       EDUCATION — Gallery4 carousel
+  ════════════════════════════════════════════════════ -->
+  <section id="education" style="background:#E1D3C7; border-top:1px solid #101010; overflow:hidden;">
+
+    <!-- header -->
+    <div style="padding:52px 64px 40px; display:flex; justify-content:space-between; align-items:flex-end;">
+      <div>
+        <span class="dh-label" style="color:rgba(16,16,16,0.45);">Academic Background</span>
+        <h2 class="section-h2">MY EDUCATION</h2>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center; padding-bottom:6px;">
+        <button id="eduPrev" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(16,16,16,0.25);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#101010;transition:all 0.2s;opacity:0.35;" onmouseenter="this.style.background='rgba(16,16,16,0.1)'" onmouseleave="this.style.background='none'">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button id="eduNext" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(16,16,16,0.25);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#101010;transition:all 0.2s;" onmouseenter="this.style.background='rgba(16,16,16,0.1)'" onmouseleave="this.style.background='none'">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- carousel track -->
+    <div id="eduTrack" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;gap:20px;padding:0 64px;cursor:grab;user-select:none;">
+
+      <!-- card 1: Physics, Masaryk -->
+      <div style="flex:0 0 340px;scroll-snap-align:start;">
+        <div style="position:relative;height:460px;border-radius:18px;overflow:hidden;background:#101010;">
+          <img src="images/muni-masarykova_univerzita-logo-01.jpg" alt="Masaryk University" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center 35%;padding:32px 32px 160px;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(16,16,16,0) 20%,rgba(16,16,16,0.5) 55%,rgba(16,16,16,0.92) 100%);"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:28px;">
+            <span style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-family:'Space Mono',monospace;color:rgba(255,255,255,0.45);display:block;margin-bottom:10px;">Sep 2025 – May 2026</span>
+            <div style="font-size:21px;font-weight:700;text-transform:uppercase;letter-spacing:-0.02em;line-height:1.1;color:#fff;margin-bottom:6px;">Physics</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:10px;font-family:'Space Mono',monospace;">Masarykova univerzita</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:16px;font-family:'Space Mono',monospace;">One year of graduate physics coursework, taken to strengthen quantitative and analytical foundations.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- card 2: Master of Law, Comenius 2021–2023 -->
+      <div style="flex:0 0 340px;scroll-snap-align:start;">
+        <div style="position:relative;height:460px;border-radius:18px;overflow:hidden;background:#101010;">
+          <img src="images/Comenius-University-logo3.webp" alt="Comenius University" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center 35%;padding:32px 32px 160px;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(16,16,16,0) 20%,rgba(16,16,16,0.5) 55%,rgba(16,16,16,0.92) 100%);"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:28px;">
+            <span style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-family:'Space Mono',monospace;color:rgba(255,255,255,0.45);display:block;margin-bottom:10px;">09/2021 – 06/2023</span>
+            <div style="font-size:21px;font-weight:700;text-transform:uppercase;letter-spacing:-0.02em;line-height:1.1;color:#fff;margin-bottom:6px;">Master of Law</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:20px;font-family:'Space Mono',monospace;">Comenius University in Bratislava</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- card 3: Master of Law, Valencia (Exchange) -->
+      <div style="flex:0 0 340px;scroll-snap-align:start;">
+        <div style="position:relative;height:460px;border-radius:18px;overflow:hidden;background:#101010;">
+          <img src="images/University-of-Valencia.png" alt="University of Valencia" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center 35%;padding:32px 32px 160px;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(16,16,16,0) 20%,rgba(16,16,16,0.5) 55%,rgba(16,16,16,0.92) 100%);"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:28px;">
+            <span style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-family:'Space Mono',monospace;color:rgba(255,255,255,0.45);display:block;margin-bottom:10px;">09/2022 – 02/2023</span>
+            <div style="font-size:21px;font-weight:700;text-transform:uppercase;letter-spacing:-0.02em;line-height:1.1;color:#fff;margin-bottom:6px;">Master of Law</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:12px;font-family:'Space Mono',monospace;">University of Valencia</div>
+            <span style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Space Mono',monospace;border:1px solid #FF6714;color:#FF6714;padding:3px 10px;display:inline-block;margin-bottom:16px;">Exchange</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- card 4: Master of Law, Warsaw (Exchange) -->
+      <div style="flex:0 0 340px;scroll-snap-align:start;">
+        <div style="position:relative;height:460px;border-radius:18px;overflow:hidden;background:#101010;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(16,16,16,0) 30%,rgba(16,16,16,0.4) 60%,rgba(16,16,16,0.88) 100%);"></div>
+          <div style="position:absolute;top:24px;left:24px;right:24px;bottom:160px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+            <img src="images/universitas-varsoviensis-logo.jpg" alt="University of Warsaw" style="width:78%;height:auto;" />
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:28px;">
+            <span style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-family:'Space Mono',monospace;color:rgba(255,255,255,0.45);display:block;margin-bottom:10px;">02/2022 – 06/2022</span>
+            <div style="font-size:21px;font-weight:700;text-transform:uppercase;letter-spacing:-0.02em;line-height:1.1;color:#fff;margin-bottom:6px;">Master of Law</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:12px;font-family:'Space Mono',monospace;">University of Warsaw</div>
+            <span style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Space Mono',monospace;border:1px solid #FF6714;color:#FF6714;padding:3px 10px;display:inline-block;margin-bottom:16px;">Exchange</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- card 5: Bachelor of Law, Comenius 2018–2021 -->
+      <div style="flex:0 0 340px;scroll-snap-align:start;">
+        <div style="position:relative;height:460px;border-radius:18px;overflow:hidden;background:#101010;">
+          <img src="images/Comenius-University-logo3.webp" alt="Comenius University" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center 35%;padding:32px 32px 160px;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(16,16,16,0) 20%,rgba(16,16,16,0.5) 55%,rgba(16,16,16,0.92) 100%);"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:28px;">
+            <span style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-family:'Space Mono',monospace;color:rgba(255,255,255,0.45);display:block;margin-bottom:10px;">09/2018 – 06/2021</span>
+            <div style="font-size:21px;font-weight:700;text-transform:uppercase;letter-spacing:-0.02em;line-height:1.1;color:#fff;margin-bottom:6px;">Bachelor of Law</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:20px;font-family:'Space Mono',monospace;">Comenius University in Bratislava</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- trailing spacer so last card can align to left snap point -->
+      <div style="flex:0 0 44px;"></div>
+
+    </div>
+
+
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       SKILLS — DrawHistory column grid
+  ════════════════════════════════════════════════════ -->
+  <section id="skills" style="border-top:1px solid #101010;">
+    <!-- header row -->
+    <div style="padding: 52px 64px 48px; border-bottom: 1px solid #101010;">
+      <span class="dh-label">Expertise</span>
+      <h2 class="section-h2">SKILLS</h2>
+    </div>
+    <!-- skill columns with dividers -->
+    <div style="display:grid; grid-template-columns:repeat(3,1fr);">
+      <div style="padding:36px 32px; border-right:1px solid rgba(16,16,16,0.1);">
+        <p style="color:#FF6714; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; font-family:'Space Mono',monospace; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid rgba(16,16,16,0.1);">Technical</p>
+        <div>
+          <span class="skill-tag">Claude Code</span>
+          <span class="skill-tag">Work Automation</span>
+          <span class="skill-tag">API Integration</span>
+          <span class="skill-tag">LLM-based Tools</span>
+        </div>
+      </div>
+      <div style="padding:36px 32px; border-right:1px solid rgba(16,16,16,0.1);">
+        <p style="color:#FF6714; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; font-family:'Space Mono',monospace; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid rgba(16,16,16,0.1);">Mathematics</p>
+        <div>
+          <span class="skill-tag">Linear Algebra</span>
+          <span class="skill-tag">Mathematical Analysis</span>
+        </div>
+      </div>
+      <div style="padding:36px 32px;">
+        <p style="color:#FF6714; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; font-family:'Space Mono',monospace; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid rgba(16,16,16,0.1);">Law</p>
+        <div>
+          <span class="skill-tag">Legal Drafting</span>
+          <span class="skill-tag">Legal Research</span>
+          <span class="skill-tag">Analytical Thinking</span>
+          <span class="skill-tag">Document Review</span>
+          <span class="skill-tag">Due Diligence</span>
+          <span class="skill-tag">M&amp;A</span>
+          <span class="skill-tag">Litigation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       CERTIFICATIONS & ACHIEVEMENTS
+  ════════════════════════════════════════════════════ -->
+  <section style="background:#F2E9E1; padding:80px 64px; border-top:1px solid rgba(16,16,16,0.15);">
+    <h2 class="section-h2" style="margin-bottom:56px;">COURSES &amp;<br>ACHIEVEMENTS</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px;">
+      <div style="display:flex; flex-direction:column; gap:24px;">
+        <!-- photo -->
+        <div style="width:100%; aspect-ratio:4/3; border-radius:14px; overflow:hidden; background:#d8cfc6;">
+          <img src="images/da89609a-aa19-4ec8-85c1-33f35742658c@w1920.webp" alt="Innovations and Entrepreneurship" style="width:100%; height:100%; object-fit:cover; display:block;" />
+        </div>
+        <!-- description -->
+        <div>
+          <p style="color:#FF6714; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; font-family:'Space Mono',monospace; margin-bottom:12px;">Courses</p>
+          <h3 style="font-size:17px; font-weight:700; text-transform:uppercase; letter-spacing:-0.02em; margin-bottom:6px; color:#101010;">Innovations and Entrepreneurship</h3>
+          <p style="color:#FF6714; font-size:13px; margin-bottom:4px; font-family:'Space Mono',monospace;">Jihomoravské inovační centrum</p>
+          <p style="color:rgba(16,16,16,0.45); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:12px;">02/2026 · 05/2026</p>
+          <p style="font-size:13px; color:rgba(16,16,16,0.55); line-height:1.75; font-family:'Space Mono',monospace;">Mentored course facilitating early development of a business idea, validation, and creation of an MVP.</p>
+        </div>
+      </div>
+      <div>
+        <p style="color:#FF6714; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; font-family:'Space Mono',monospace; margin-bottom:24px;">Achievements</p>
+        <div style="border:1px solid rgba(16,16,16,0.15); padding:28px;">
+          <p style="color:#FF6714; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; font-family:'Space Mono',monospace; margin-bottom:12px;">Finalist</p>
+          <h3 style="font-size:17px; font-weight:600; text-transform:uppercase; letter-spacing:-0.01em; margin-bottom:6px;">Helga Pedersen Moot Court 2022</h3>
+          <p style="color:#FF6714; font-size:13px; margin-bottom:4px;">European Court of Human Rights</p>
+          <p style="color:rgba(16,16,16,0.45); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:16px;">05/2022 · Strasbourg</p>
+          <ul style="font-size:13px; color:#101010; line-height:1.7; list-style:none; padding:0; margin-bottom:20px;">
+            <li style="padding-left:16px; position:relative; margin-bottom:6px;"><span style="position:absolute;left:0;color:#FF6714;">—</span> 2nd team in Faculty of Law Comenius University in Bratislava history to reach Strasbourg finals</li>
+            <li style="padding-left:16px; position:relative;"><span style="position:absolute;left:0;color:#FF6714;">—</span> Competed vs Oxford, Leiden, and other leading European universities</li>
+          </ul>
+          <div style="width:100%; border-radius:10px; overflow:hidden;">
+            <img src="images/485147694_1115109100658389_7977777322990546193_n.jpg" alt="European Court of Human Rights" style="width:100%; height:auto; display:block;" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       VOLUNTEERING — DrawHistory card grid
+  ════════════════════════════════════════════════════ -->
+  <section style="border-top:1px solid rgba(16,16,16,0.1);">
+    <div style="padding: 52px 64px 48px; border-bottom: 1px solid rgba(16,16,16,0.1);">
+      <span class="dh-label">Community</span>
+      <h2 class="section-h2">VOLUNTEERING</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr);">
+      <div style="padding:32px 28px; border-right:1px solid rgba(16,16,16,0.1);">
+        <span style="font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(16,16,16,0.35); font-family:'Space Mono',monospace; display:block; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(16,16,16,0.08);">06/2019 – 06/2021</span>
+        <h3 style="font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:-0.01em; margin-bottom:6px;">International Officer</h3>
+        <p style="color:#FF6714; font-size:12px; margin-bottom:12px; font-family:'Space Mono',monospace;">High School Student Union of Slovakia</p>
+        <p style="font-size:13px; color:#101010; line-height:1.65; font-family:'Space Mono',monospace;">Represented the organisation in OBESSU projects. General Assembly (Madrid, 2019) and Seeds for Integration seminar (Spain, 2019).</p>
+      </div>
+      <div style="padding:32px 28px; border-right:1px solid rgba(16,16,16,0.1);">
+        <span style="font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(16,16,16,0.35); font-family:'Space Mono',monospace; display:block; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(16,16,16,0.08);">09/2020 – 06/2021</span>
+        <h3 style="font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:-0.01em; margin-bottom:6px;">Member of Disciplinary Committee</h3>
+        <p style="color:#FF6714; font-size:13px; font-family:'Space Mono',monospace;">Faculty of Law, Comenius University</p>
+      </div>
+      <div style="padding:32px 28px;">
+        <span style="font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(16,16,16,0.35); font-family:'Space Mono',monospace; display:block; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(16,16,16,0.08);">09/2019 – 06/2020</span>
+        <h3 style="font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:-0.01em; margin-bottom:6px;">Member of Permanent Election Committee</h3>
+        <p style="color:#FF6714; font-size:13px; font-family:'Space Mono',monospace;">Faculty of Law, Comenius University</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       LANGUAGES & ADDITIONAL SKILLS
+  ════════════════════════════════════════════════════ -->
+  <section style="background:#E1D3C7; padding:72px 64px; border-top:1px solid rgba(16,16,16,0.12);">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px;">
+      <div>
+        <p style="color:#FF6714; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; font-family:'Space Mono',monospace; margin-bottom:36px;">Languages</p>
+        <div style="border-bottom:1px solid rgba(16,16,16,0.15); padding:16px 0; display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:-0.01em;">Slovak</span><span style="color:rgba(16,16,16,0.4); font-size:13px; margin-left:10px;">Native</span></div>
+          <div><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        </div>
+        <div style="border-bottom:1px solid rgba(16,16,16,0.15); padding:16px 0; display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:-0.01em;">English</span><span style="color:rgba(16,16,16,0.4); font-size:13px; margin-left:10px;">Proficient</span></div>
+          <div><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot empty"></span></div>
+        </div>
+        <div style="border-bottom:1px solid rgba(16,16,16,0.15); padding:16px 0; display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:-0.01em;">Czech</span><span style="color:rgba(16,16,16,0.4); font-size:13px; margin-left:10px;">Proficient</span></div>
+          <div><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot empty"></span></div>
+        </div>
+      </div>
+      <div>
+        <p style="color:#FF6714; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; font-family:'Space Mono',monospace; margin-bottom:36px;">Additional Skills</p>
+        <div style="margin-top:8px;">
+          <span class="skill-tag">B2 Driving Licence</span>
+          <span class="skill-tag">Microsoft Office</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       EMAIL CTA — DrawHistory newsletter style
+  ════════════════════════════════════════════════════ -->
+  <section style="padding:72px 64px; border-top:1px solid rgba(16,16,16,0.1);">
+    <span class="dh-label">Get In Touch</span>
+    <h2 style="font-size:clamp(28px,3.5vw,48px); font-weight:700; text-transform:uppercase; letter-spacing:-0.03em; margin-bottom:16px; line-height:1;">OPEN TO NEW OPPORTUNITIES.<br>NO SPAM.</h2>
+    <p style="font-size:14px; color:rgba(16,16,16,0.45); line-height:1.7; font-family:'Space Mono',monospace; margin-bottom:32px; max-width:500px;">Especially interested in AI-native product roles — where the problem is physical, the solution is software, and the iteration is fast.</p>
+    <div style="display:flex; align-items:flex-end; gap:24px;">
+      <input type="email" class="email-cta-input" placeholder="Your email" style="flex:1;" />
+      <a href="mailto:jakub.kmet13@gmail.com" class="btn btn-orange" style="white-space:nowrap; flex-shrink:0;">Write Me →</a>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       FOOTER — DrawHistory large nav + contact
+  ════════════════════════════════════════════════════ -->
+  <footer id="contact" style="background:#3D3B2F; padding:0 64px;">
+
+    <!-- large nav links -->
+    <nav style="padding-top:16px; margin-bottom:0;">
+      <a href="#about"      class="footer-nav-link">About</a>
+      <a href="#projects"   class="footer-nav-link">Projects</a>
+      <a href="#experience" class="footer-nav-link">Experience</a>
+      <a href="#education"  class="footer-nav-link">Education</a>
+      <a href="#skills"     class="footer-nav-link">Skills</a>
+    </nav>
+
+    <!-- contact details row -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; padding:56px 0 48px; border-top:1px solid rgba(242,233,225,0.1); margin-top:20px;">
+      <div>
+        <h2 style="font-size:clamp(40px,4.5vw,64px); font-weight:700; text-transform:uppercase; letter-spacing:-0.04em; line-height:0.9; color:#F2E9E1; margin-bottom:20px;">LET'S CONNECT.</h2>
+        <p style="color:rgba(242,233,225,0.5); font-size:14px; max-width:280px; line-height:1.7; font-family:'Space Mono',monospace;">
+          Open to AI-native product roles — especially where physical systems meet software intelligence.
+        </p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px; align-items:flex-end; justify-content:flex-end; height:100%;">
+        <a href="mailto:jakub.kmet13@gmail.com" style="color:#F2E9E1; font-size:14px; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; font-family:'Space Mono',monospace;" onmouseover="this.style.color='#FF6714'" onmouseout="this.style.color='#F2E9E1'">jakub.kmet13@gmail.com</a>
+        <a href="tel:+421917859560" style="color:rgba(242,233,225,0.45); font-size:14px; letter-spacing:0.06em; text-decoration:none; font-family:'Space Mono',monospace;" onmouseover="this.style.color='#FF6714'" onmouseout="this.style.color='rgba(242,233,225,0.45)'">+421 917 859 560</a>
+        <a href="https://www.linkedin.com/in/jakub-kme%C5%A5" style="color:rgba(242,233,225,0.45); font-size:12px; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; font-family:'Space Mono',monospace;" onmouseover="this.style.color='#FF6714'" onmouseout="this.style.color='rgba(242,233,225,0.45)'">LinkedIn →</a>
+        <span style="color:rgba(242,233,225,0.3); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; font-family:'Space Mono',monospace;">Bratislava, Slovakia</span>
+      </div>
+    </div>
+
+    <!-- bottom bar -->
+    <div style="border-top:1px solid rgba(242,233,225,0.1); padding:22px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <span style="color:rgba(242,233,225,0.3); font-size:12px; letter-spacing:0.12em; text-transform:uppercase; font-family:'Space Mono',monospace;">/ Jakub Kmeť © 2026</span>
+      <div style="display:flex; gap:24px;">
+        <a href="https://www.linkedin.com/in/jakub-kme%C5%A5" style="color:rgba(242,233,225,0.3);text-decoration:none;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Space Mono',monospace;" onmouseover="this.style.color='#F2E9E1'" onmouseout="this.style.color='rgba(242,233,225,0.3)'">LinkedIn</a>
+        <a href="mailto:jakub.kmet13@gmail.com" style="color:rgba(242,233,225,0.3);text-decoration:none;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Space Mono',monospace;" onmouseover="this.style.color='#F2E9E1'" onmouseout="this.style.color='rgba(242,233,225,0.3)'">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════════════
+       SCRIPTS
+  ════════════════════════════════════════════════════ -->
+  <script>
+    // ── hamburger menu ──
+    function openMenu() {
+      document.getElementById('menu-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      document.getElementById('menu-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeMenu();
+    });
+
+    // ── hero scroll animation: photo grows + zooms, text fades/rises ──
+    (function() {
+      var wrapper        = document.getElementById('hero-wrapper');
+      var textEl         = document.getElementById('hero-text');
+      var imgEl          = document.getElementById('hero-img');
+      var photoContainer = document.getElementById('hero-photo-container');
+      var photoWrap      = document.getElementById('hero-photo-wrap');
+      if (!wrapper || !textEl || !imgEl) return;
+
+      function update() {
+        var scrollY   = window.scrollY;
+        var maxScroll = wrapper.offsetHeight - window.innerHeight;
+        if (maxScroll <= 0) {
+          // Set initial centered position
+          textEl.style.transform = 'translateY(-50%)';
+          return;
+        }
+        var p = Math.max(0, Math.min(1, scrollY / maxScroll)); // 0 → 1
+
+        // Photo inner image: scale 0.82 → 1.08
+        var scale = 0.82 + p * 0.26;
+        imgEl.style.transform = 'scale(' + scale + ')';
+
+        // Photo gaps shrink to 0 on all sides
+        var pad = Math.round(28 * (1 - p));
+        photoWrap.style.top    = pad + 'px';
+        photoWrap.style.bottom = pad + 'px';
+        photoWrap.style.right  = pad + 'px';
+
+        // Photo grows wider: 36% → 52%
+        var width = 36 + p * 16;
+        photoWrap.style.width = width + '%';
+
+        // Text: fade out + drift up (base -50% centering preserved via calc)
+        var tp = Math.min(1, p / 0.70);
+        textEl.style.opacity   = String(Math.max(0, 1 - tp));
+        textEl.style.transform = 'translateY(calc(-50% + ' + Math.round(-tp * 70) + 'px))';
+      }
+
+      window.addEventListener('scroll', update, { passive: true });
+      update(); // set initial centered position
+    })();
+
+    // ── Experience stacked card fan ──
+    var expData = [
+      {
+        tag: 'Law Firm', role: 'Junior Associate', company: 'Hillbridges',
+        date: '08/2023 – 10/2024 · Bratislava',
+        desc: 'Boutique firm founded by ex-Linklaters partners. Focused on M&A, financing, insolvency and restructuring across CEE markets. Drafted transaction documents, conducted legal due diligence and coordinated with clients across multiple jurisdictions.',
+        bg: '#F5EFE4',
+        visHtml: '<img src="images/f8818cd-logocmyk-1.jpg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:82%;height:auto;" />'
+      },
+      {
+        tag: 'Law Firm', role: 'Student Associate', company: 'Hillbridges',
+        date: '04/2023 – 07/2023',
+        desc: 'First exposure to a full law firm environment. Assisted senior associates with legal research, document drafting and client communication in a fast-paced transactional practice.',
+        bg: '#EDE7DC',
+        visHtml: '<img src="images/f8818cd-logocmyk-1.jpg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:82%;height:auto;" />'
+      },
+      {
+        tag: 'Law Firm', role: 'Paralegal', company: 'HAVEL & Partners',
+        date: '10/2021 – 02/2022 · Bratislava',
+        desc: 'Largest independent law firm in CZ & SK. Worked across corporate, IP, technology and employment practice groups. Supported senior lawyers with legal research, document preparation and client file management.',
+        bg: '#111111',
+        visHtml: '<img src="images/HP_EN_logo_inverzni-768x400.jpg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72%;height:auto;" />'
+      },
+      {
+        tag: 'Startup', role: 'Sales Specialist', company: 'NeoHealth s.r.o.',
+        date: '09/2019 – 01/2020',
+        desc: 'Built and maintained customer relationships for a medical software startup. Relayed user needs and product feedback directly to the development team, bridging the gap between clients and the product roadmap.',
+        bg: '#D4560E',
+        visHtml: '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><span style="font-size:88px;font-weight:700;color:rgba(255,255,255,0.12);font-family:\'DM Sans\',sans-serif;letter-spacing:-0.04em;">NEO</span></div>'
+      }
+    ];
+
+    var selectedExpIdx = -1;
+
+    function applyFanTransform(card) {
+      var ci = parseInt(card.getAttribute('data-ci'));
+      card.style.transform =
+        'translateX(' + (ci * 55) + 'px) ' +
+        'translateY(' + (ci * -42) + 'px) ' +
+        'translateZ(' + (ci * -60) + 'px) ' +
+        'rotateX(5deg) rotateY(-12deg)';
+    }
+
+    function applyHoverTransform(card) {
+      var ci = parseInt(card.getAttribute('data-ci'));
+      card.style.transform =
+        'translateX(' + (ci * 55) + 'px) ' +
+        'translateY(' + (ci * -42 - 20) + 'px) ' +
+        'translateZ(' + (ci * -60 + 40) + 'px) ' +
+        'rotateX(3deg) rotateY(-10deg)';
+    }
+
+    function applyActiveTransform(card) {
+      var ci = parseInt(card.getAttribute('data-ci'));
+      var xOffset = 160 - ci * 55;
+      card.style.transform =
+        'translateX(' + xOffset + 'px) ' +
+        'translateY(-55px) ' +
+        'translateZ(210px) ' +
+        'rotateX(1deg) rotateY(-3deg)';
+    }
+
+    function selectExpCard(idx) {
+      var cards = Array.from(document.querySelectorAll('.exp-card'));
+      var panel = document.getElementById('expInfoPanel');
+
+      if (selectedExpIdx === idx) {
+        deselectExpCard();
+        return;
+      }
+
+      selectedExpIdx = idx;
+
+      // Move selected card forward; put all others back to fan
+      cards.forEach(function(card, i) {
+        card.classList.remove('is-active');
+        if (i === idx) {
+          applyActiveTransform(card);
+          card.classList.add('is-active');
+        } else {
+          applyFanTransform(card);
+        }
+      });
+
+      var d = expData[idx];
+      document.getElementById('expITag').textContent = d.tag;
+      document.getElementById('expIRole').textContent = d.role;
+      document.getElementById('expICompany').textContent = d.company;
+      document.getElementById('expIDate').textContent = d.date;
+      document.getElementById('expIDesc').textContent = d.desc;
+      panel.style.opacity = '1';
+      panel.style.pointerEvents = 'auto';
+    }
+
+    function deselectExpCard() {
+      var cards = document.querySelectorAll('.exp-card');
+      cards.forEach(function(card) {
+        card.classList.remove('is-active');
+        applyFanTransform(card);
+      });
+      var panel = document.getElementById('expInfoPanel');
+      panel.style.opacity = '0';
+      panel.style.pointerEvents = 'none';
+      selectedExpIdx = -1;
+    }
+
+    // Stage 2: open fullscreen overlay from info panel button
+    function openExpFromPanel() {
+      if (selectedExpIdx < 0) return;
+      var d = expData[selectedExpIdx];
+      var vis = document.getElementById('expVis');
+      vis.style.background = d.bg;
+      vis.innerHTML = d.visHtml;
+      document.getElementById('expDTag').textContent = d.tag;
+      document.getElementById('expDRole').textContent = d.role;
+      document.getElementById('expDCompany').textContent = d.company;
+      document.getElementById('expDDate').textContent = d.date;
+      document.getElementById('expDDesc').textContent = d.desc;
+      var ov = document.getElementById('expOverlay');
+      ov.style.display = 'block';
+      requestAnimationFrame(function() { ov.style.opacity = '1'; });
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeExpCard() {
+      var ov = document.getElementById('expOverlay');
+      ov.style.opacity = '0';
+      setTimeout(function() { ov.style.display = 'none'; document.body.style.overflow = ''; }, 300);
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeExpCard();
+        deselectExpCard();
+      }
+    });
+
+    // Init: set fan positions + wire all interaction at scene level (bypasses 3D hit-test bugs)
+    (function() {
+      var scene = document.getElementById('expScene');
+      var cards = Array.from(document.querySelectorAll('.exp-card'));
+      var hoveredIdx = -1;
+
+      // Set initial fan transforms and disable pointer-events on cards
+      // (all events are captured by the scene wrapper instead)
+      cards.forEach(function(card) {
+        applyFanTransform(card);
+        card.style.pointerEvents = 'none';
+      });
+      scene.style.cursor = 'default';
+
+      // Identify frontmost card at a screen point.
+      // Strategy: iterate back→front (last DOM index = back, index 0 = front).
+      // Keep overwriting result — the final value is the frontmost card whose
+      // bounding box contains the point. This mirrors true 3D painter's order.
+      function cardAtPoint(cx, cy) {
+        var result = -1;
+        for (var i = cards.length - 1; i >= 0; i--) {
+          var r = cards[i].getBoundingClientRect();
+          if (cx >= r.left && cx <= r.right && cy >= r.top && cy <= r.bottom) {
+            result = i;
+          }
+        }
+        return result;
+      }
+
+      // Attach to document so overflow:visible cards outside scene box still fire
+      document.addEventListener('mousemove', function(e) {
+        var idx = cardAtPoint(e.clientX, e.clientY);
+        if (idx === hoveredIdx) return;
+
+        // Un-hover previous
+        if (hoveredIdx >= 0 && hoveredIdx !== selectedExpIdx) {
+          applyFanTransform(cards[hoveredIdx]);
+        }
+        hoveredIdx = idx;
+
+        // Hover new card
+        if (idx >= 0 && idx !== selectedExpIdx) {
+          applyHoverTransform(cards[idx]);
+        }
+      });
+
+      document.addEventListener('click', function(e) {
+        var idx = cardAtPoint(e.clientX, e.clientY);
+        if (idx >= 0) selectExpCard(idx);
+      });
+    })();
+
+    // ── education carousel ──
+    (function() {
+      var track = document.getElementById('eduTrack');
+      if (!track) return;
+      var dots = document.querySelectorAll('.edu-dot');
+      var prevBtn = document.getElementById('eduPrev');
+      var nextBtn = document.getElementById('eduNext');
+      var CARD_W = 360; // 340px card + 20px gap
+      var TOTAL = 5;
+      var current = 0;
+
+      // hide webkit scrollbar
+      var s = document.createElement('style');
+      s.textContent = '#eduTrack::-webkit-scrollbar{display:none;}';
+      document.head.appendChild(s);
+
+      function goTo(idx) {
+        current = Math.max(0, Math.min(TOTAL - 1, idx));
+        track.scrollTo({ left: current * CARD_W, behavior: 'smooth' });
+        dots.forEach(function(d, i) {
+          d.style.background = i === current ? '#101010' : 'rgba(16,16,16,0.2)';
+        });
+        prevBtn.style.opacity = current === 0 ? '0.35' : '1';
+        nextBtn.style.opacity = current === TOTAL - 1 ? '0.35' : '1';
+      }
+
+      prevBtn.addEventListener('click', function() { goTo(current - 1); });
+      nextBtn.addEventListener('click', function() { goTo(current + 1); });
+      dots.forEach(function(d) {
+        d.addEventListener('click', function() { goTo(parseInt(d.getAttribute('data-idx'))); });
+      });
+
+      track.addEventListener('scroll', function() {
+        var idx = Math.round(track.scrollLeft / CARD_W);
+        if (idx !== current) {
+          current = idx;
+          dots.forEach(function(d, i) {
+            d.style.background = i === current ? '#101010' : 'rgba(16,16,16,0.2)';
+          });
+          prevBtn.style.opacity = current === 0 ? '0.35' : '1';
+          nextBtn.style.opacity = current === TOTAL - 1 ? '0.35' : '1';
+        }
+      });
+
+      // drag to scroll
+      var dragging = false, startX, startLeft;
+      track.addEventListener('mousedown', function(e) {
+        dragging = true;
+        startX = e.pageX;
+        startLeft = track.scrollLeft;
+        track.style.cursor = 'grabbing';
+        document.body.style.userSelect = 'none';
+      });
+      document.addEventListener('mousemove', function(e) {
+        if (!dragging) return;
+        track.scrollLeft = startLeft - (e.pageX - startX);
+      });
+      document.addEventListener('mouseup', function() {
+        if (!dragging) return;
+        dragging = false;
+        track.style.cursor = 'grab';
+        document.body.style.userSelect = '';
+        goTo(Math.round(track.scrollLeft / CARD_W));
+      });
+
+      goTo(0);
+    })();
+  </script>
+</body>
+</html>
