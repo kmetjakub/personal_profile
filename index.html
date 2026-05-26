@@ -49,7 +49,7 @@
     .mono { font-family: 'Space Mono', ui-monospace, monospace; }
 
     .menu-link {
-      font-size: clamp(40px, 7vw, 88px);
+      font-size: clamp(24px, 3.5vw, 48px);
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: -0.04em;
@@ -57,7 +57,7 @@
       color: #F2E9E1;
       text-decoration: none;
       display: block;
-      padding: 14px 0;
+      padding: 10px 0;
       border-bottom: 1px solid rgba(242,233,225,0.12);
       transition: color 0.15s;
     }
@@ -250,11 +250,11 @@
 
     /* ── large footer nav links ── */
     .footer-nav-link {
-      font-size: clamp(32px, 4.5vw, 60px);
+      font-size: clamp(20px, 2.8vw, 38px);
       font-weight: 700; text-transform: uppercase;
       letter-spacing: -0.03em; color: #F2E9E1;
       text-decoration: none; display: block;
-      padding: 14px 0;
+      padding: 10px 0;
       border-bottom: 1px solid rgba(242,233,225,0.1);
       transition: color 0.15s; line-height: 1;
     }
@@ -304,10 +304,6 @@
       <a href="#skills"     class="menu-link" onclick="closeMenu()">Skills</a>
       <a href="#contact"    class="menu-link" onclick="closeMenu()">Contact</a>
     </nav>
-    <div class="mt-12 flex gap-8" style="color:rgba(242,233,225,0.4); font-size:13px; letter-spacing:0.12em; text-transform:uppercase;">
-      <a href="https://www.linkedin.com/in/jakub-kme%C5%A5" style="color:rgba(242,233,225,0.4);" onmouseover="this.style.color='#FF6714'" onmouseout="this.style.color='rgba(242,233,225,0.4)'">LinkedIn</a>
-      <a href="mailto:jakub.kmet13@gmail.com" style="color:rgba(242,233,225,0.4);" onmouseover="this.style.color='#FF6714'" onmouseout="this.style.color='rgba(242,233,225,0.4)'">Email</a>
-    </div>
   </div>
 
   <!-- ════════════════════════════════════════════════════
@@ -315,12 +311,16 @@
   ════════════════════════════════════════════════════ -->
   <nav style="position:fixed; top:0; left:0; right:0; z-index:100; background:#3D3B2F; padding:14px 56px; display:flex; justify-content:space-between; align-items:center;">
     <a href="#" style="color:#F2E9E1; font-size:15px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none;">Jakub Kmeť</a>
-    <button id="hamburger" onclick="openMenu()" aria-label="Open menu"
-      style="background:none; border:none; cursor:pointer; display:flex; flex-direction:column; gap:5px; padding:4px;">
-      <span style="display:block; width:26px; height:1.5px; background:#F2E9E1;"></span>
-      <span style="display:block; width:26px; height:1.5px; background:#F2E9E1;"></span>
-      <span style="display:block; width:18px; height:1.5px; background:#F2E9E1;"></span>
-    </button>
+    <div style="display:flex; align-items:center; gap:20px;">
+      <a href="https://www.linkedin.com/in/jakub-kme%C5%A5" style="color:rgba(242,233,225,0.6); font-size:12px; letter-spacing:0.06em; text-transform:none; text-decoration:none; font-family:'Space Mono',monospace; transition:color 0.15s;" onmouseover="this.style.color='#FF6714'" onmouseout="this.style.color='rgba(242,233,225,0.6)'">linkedin</a>
+      <a href="mailto:jakub.kmet13@gmail.com" style="color:rgba(242,233,225,0.6); font-size:12px; letter-spacing:0.06em; text-transform:none; text-decoration:none; font-family:'Space Mono',monospace; transition:color 0.15s;" onmouseover="this.style.color='#FF6714'" onmouseout="this.style.color='rgba(242,233,225,0.6)'">email</a>
+      <button id="hamburger" onclick="openMenu()" aria-label="Open menu"
+        style="background:none; border:none; cursor:pointer; display:flex; flex-direction:column; gap:5px; padding:4px;">
+        <span style="display:block; width:26px; height:1.5px; background:#F2E9E1;"></span>
+        <span style="display:block; width:26px; height:1.5px; background:#F2E9E1;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F2E9E1;"></span>
+      </button>
+    </div>
   </nav>
 
   <!-- ════════════════════════════════════════════════════
@@ -371,7 +371,7 @@
       </div>
       <div style="padding-top:4px;">
         <p style="font-size:14px; line-height:1.85; color:#101010; font-family:'Space Mono',monospace;">
-          Law trained me to break down complex systems, identify failure points, and communicate decisions clearly — skills I now apply to building AI products. I've spent the last few years doing hands-on legal work across M&amp;A, litigation, and corporate law, while independently building tools in automation and AI. I'm drawn to roles where the problem is physical, the solution is software, and the iteration is fast.
+          Law trained me to break down complex systems, identify failure points, and communicate decisions clearly — skills I now apply to building AI products. I spent the last few years doing hands-on legal work across M&amp;A, litigation, and corporate law, acquiring mathematical reasoning, and now harnessing all these skills to independently build tools in automation and AI. I'm drawn to roles where the problem is physical, the solution is software, and the iteration is fast.
         </p>
       </div>
     </div>
@@ -389,7 +389,7 @@
         <h2 class="section-h2">MY PROJECTS</h2>
       </div>
       <p style="font-size:14px; line-height:1.75; color:#101010; font-family:'Space Mono',monospace; max-width:360px; padding-bottom:4px;">
-        Prototypes, tools and applications built at the intersection of law, AI, and automation — turning complex workflows into simple interfaces.
+        Prototypes of tools and applications built at the intersection of AI and Automation.
       </p>
     </div>
 
@@ -436,6 +436,12 @@
       </div>
 
     </div>
+
+    <!-- GitHub button -->
+    <div style="padding:0 64px 64px;">
+      <a href="https://github.com/kmetjakub" target="_blank" class="btn btn-orange">View GitHub Repositories →</a>
+    </div>
+
   </section>
 
   <!-- ════════════════════════════════════════════════════
@@ -570,7 +576,7 @@
         PART OF THE TECHNOLOGICAL REVOLUTION.
       </h2>
       <p style="font-size:14px; color:#101010; line-height:1.7; max-width:340px; margin-bottom:36px; font-family:'Space Mono',monospace;">
-        I use Claude and GPT-4 not just as chat tools but as prototyping partners — scoping problems, generating data models, and iterating on solutions before writing a single line of production code. Contract risk extraction in under 2 days (LexScan). Warehouse routing simulation built in a weekend (Warehouse OS).
+        Mastering Claude Code, ChatGPT, and the broader AI ecosystem — building real tools, automating workflows, and staying at the cutting edge of what these technologies can do.
       </p>
       <a href="mailto:jakub.kmet13@gmail.com" class="btn btn-orange" style="align-self:flex-start;">Get in Touch →</a>
     </div>
@@ -749,10 +755,7 @@
           <h3 style="font-size:17px; font-weight:600; text-transform:uppercase; letter-spacing:-0.01em; margin-bottom:6px;">Helga Pedersen Moot Court 2022</h3>
           <p style="color:#FF6714; font-size:13px; margin-bottom:4px;">European Court of Human Rights</p>
           <p style="color:rgba(16,16,16,0.45); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:16px;">05/2022 · Strasbourg</p>
-          <ul style="font-size:13px; color:#101010; line-height:1.7; list-style:none; padding:0; margin-bottom:20px;">
-            <li style="padding-left:16px; position:relative; margin-bottom:6px;"><span style="position:absolute;left:0;color:#FF6714;">—</span> 2nd team in Faculty of Law Comenius University in Bratislava history to reach Strasbourg finals</li>
-            <li style="padding-left:16px; position:relative;"><span style="position:absolute;left:0;color:#FF6714;">—</span> Competed vs Oxford, Leiden, and other leading European universities</li>
-          </ul>
+          <p style="font-size:13px; color:#101010; line-height:1.7; font-family:'Space Mono',monospace; margin-bottom:20px;">2nd team in Faculty of Law Comenius University in Bratislava history to reach Strasbourg finals, competing against Oxford, Leiden, and other leading European universities.</p>
           <div style="width:100%; border-radius:10px; overflow:hidden;">
             <img src="images/485147694_1115109100658389_7977777322990546193_n.jpg" alt="European Court of Human Rights" style="width:100%; height:auto; display:block;" />
           </div>
@@ -820,15 +823,32 @@
   </section>
 
   <!-- ════════════════════════════════════════════════════
-       EMAIL CTA — DrawHistory newsletter style
+       MOTIVATION — podcast recommendation
   ════════════════════════════════════════════════════ -->
   <section style="padding:72px 64px; border-top:1px solid rgba(16,16,16,0.1);">
-    <span class="dh-label">Get In Touch</span>
-    <h2 style="font-size:clamp(28px,3.5vw,48px); font-weight:700; text-transform:uppercase; letter-spacing:-0.03em; margin-bottom:16px; line-height:1;">OPEN TO NEW OPPORTUNITIES.<br>NO SPAM.</h2>
-    <p style="font-size:14px; color:rgba(16,16,16,0.45); line-height:1.7; font-family:'Space Mono',monospace; margin-bottom:32px; max-width:500px;">Especially interested in AI-native product roles — where the problem is physical, the solution is software, and the iteration is fast.</p>
-    <div style="display:flex; align-items:flex-end; gap:24px;">
-      <input type="email" class="email-cta-input" placeholder="Your email" style="flex:1;" />
-      <a href="mailto:jakub.kmet13@gmail.com" class="btn btn-orange" style="white-space:nowrap; flex-shrink:0;">Write Me →</a>
+    <span class="dh-label">Motivation</span>
+    <h2 style="font-size:clamp(28px,3.5vw,48px); font-weight:700; text-transform:uppercase; letter-spacing:-0.03em; margin-bottom:48px; line-height:1;">PODCAST RECOMMENDATION.</h2>
+
+    <div style="display:grid; grid-template-columns:480px 1fr; gap:48px; align-items:start;">
+
+      <!-- image -->
+      <div style="border-radius:14px; overflow:hidden; aspect-ratio:16/9; background:#FF6714;">
+        <img
+          src="images/snímka.png"
+          alt="Lenny's Podcast — Boris Cherny"
+          style="width:100%; height:100%; object-fit:cover; display:block;"
+        />
+      </div>
+
+      <!-- text -->
+      <div style="padding-top:4px;">
+        <p style="color:#FF6714; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; font-family:'Space Mono',monospace; margin-bottom:12px;">Lenny's Podcast</p>
+        <h3 style="font-size:20px; font-weight:700; text-transform:uppercase; letter-spacing:-0.02em; line-height:1.1; margin-bottom:20px; color:#101010;">Head of Claude Code: What Happens After Coding Is Solved — Boris Cherny</h3>
+        <div style="border-top:1px solid rgba(16,16,16,0.1); margin-bottom:20px;"></div>
+        <p style="font-size:13px; color:#101010; line-height:1.8; font-family:'Space Mono',monospace; max-width:480px; margin-bottom:16px;">It can open a whole new perspective to anyone not aware of tools which are so easy to use for everyone — and reframe what it means to build software in the age of AI.</p>
+        <p style="font-size:13px; color:#101010; line-height:1.8; font-family:'Space Mono',monospace; max-width:480px;">I personally got persuaded after listening to this podcast that it is inevitable for me to master tools such as Claude Code to grow and progress in this new paradigm.</p>
+      </div>
+
     </div>
   </section>
 
@@ -865,10 +885,6 @@
     <!-- bottom bar -->
     <div style="border-top:1px solid rgba(242,233,225,0.1); padding:22px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
       <span style="color:rgba(242,233,225,0.3); font-size:12px; letter-spacing:0.12em; text-transform:uppercase; font-family:'Space Mono',monospace;">/ Jakub Kmeť © 2026</span>
-      <div style="display:flex; gap:24px;">
-        <a href="https://www.linkedin.com/in/jakub-kme%C5%A5" style="color:rgba(242,233,225,0.3);text-decoration:none;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Space Mono',monospace;" onmouseover="this.style.color='#F2E9E1'" onmouseout="this.style.color='rgba(242,233,225,0.3)'">LinkedIn</a>
-        <a href="mailto:jakub.kmet13@gmail.com" style="color:rgba(242,233,225,0.3);text-decoration:none;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Space Mono',monospace;" onmouseover="this.style.color='#F2E9E1'" onmouseout="this.style.color='rgba(242,233,225,0.3)'">Email</a>
-      </div>
     </div>
   </footer>
 
