@@ -373,53 +373,15 @@
       #expMobileList { display: flex !important; }
     }
 
-    /* tablets and wide mobile (768–1100px) — reduce side padding, fix card fan */
+    /* tablets and wide mobile (768–1100px) — card fan breaks, use list + stack podcast */
     @media (max-width: 1100px) {
-      /* Nav */
-      nav { padding: 12px 24px !important; }
-
-      /* About / Summary */
-      #about { padding: 40px 24px !important; }
-
-      /* Projects */
-      #projects > div:first-child { padding: 32px 24px 24px !important; }
-      #projects > div:nth-child(2) { padding: 24px !important; gap: 16px !important; }
-      #projects > div:nth-child(3) { padding: 0 24px 40px !important; }
-
-      /* Experience */
       #expDesktop    { display: none !important; }
       #expMobileList { display: flex !important; }
       #experience { padding-top: 40px !important; overflow: visible !important; }
-      #experience > div:first-child { padding: 0 24px 28px !important; flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
+      #experience > div:first-child { padding: 0 20px 28px !important; flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
       #experience > div:first-child p { display: none !important; }
-
-      /* AI & Tooling */
-      section.ai-split > div:last-child { padding: 40px 24px !important; }
-
-      /* Education */
-      #education > div:first-child { padding: 32px 24px 24px !important; }
-      #eduTrack { padding: 0 24px !important; }
-
-      /* Skills */
-      #skills > div:first-child { padding: 32px 24px 24px !important; }
-      #skills > div:last-child > div { padding: 24px !important; }
-
-      /* Courses & Achievements */
-      .cert-section { padding: 40px 24px !important; }
-
-      /* Volunteering */
-      .vol-header { padding: 32px 24px 24px !important; }
-      .vol-grid > div { padding: 24px !important; }
-
-      /* Languages */
-      .lang-section { padding: 40px 24px !important; }
-
-      /* Podcast */
-      .motivation-section { padding: 40px 24px !important; }
+      .motivation-section { padding: 40px 20px !important; }
       .motivation-grid    { grid-template-columns: 1fr !important; gap: 28px !important; }
-
-      /* Footer */
-      footer { padding: 0 24px !important; }
     }
   </style>
 </head>
