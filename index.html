@@ -368,6 +368,13 @@
       .footer-contact-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
       .footer-contact-grid > div:last-child { align-items: flex-start !important; }
     }
+
+    /* landscape phones — force mobile list instead of 3D card fan */
+    @media (max-width: 900px) and (orientation: landscape) {
+      #expInfoPanel  { display: none !important; }
+      #expScene      { display: none !important; }
+      #expMobileList { display: flex !important; }
+    }
   </style>
 </head>
 <body class="font-sans text-onyx bg-white" style="color:#101010;">
