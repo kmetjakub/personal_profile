@@ -550,7 +550,7 @@
         <p id="expICompany" style="font-size:14px;font-weight:600;color:#FF6714;margin-bottom:4px;font-family:'Space Mono',monospace;"></p>
         <p id="expIDate" style="font-size:12px;font-family:'Space Mono',monospace;color:rgba(16,16,16,0.42);margin-bottom:18px;"></p>
         <div style="border-top:1px solid rgba(16,16,16,0.1);margin-bottom:18px;"></div>
-        <p id="expIDesc" style="font-size:13px;line-height:1.8;color:#101010;margin-bottom:0;font-family:'Space Mono',monospace;display:-webkit-box;-webkit-line-clamp:4;line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;"></p>
+        <p id="expIDesc" style="font-size:13px;line-height:1.8;color:#101010;margin-bottom:0;font-family:'Space Mono',monospace;overflow:hidden;"></p>
         <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:24px;">
           <button onclick="openExpFromPanel()" class="btn btn-orange" style="font-size:12px;">Full Details →</button>
           <button onclick="deselectExpCard()" style="background:none;border:none;cursor:pointer;font-size:12px;color:rgba(16,16,16,0.38);font-family:'Space Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;padding:0;transition:color 0.15s;" onmouseenter="this.style.color='#101010'" onmouseleave="this.style.color='rgba(16,16,16,0.38)'">× Close</button>
@@ -1171,7 +1171,7 @@
       document.getElementById('expIRole').textContent = d.role;
       document.getElementById('expICompany').textContent = d.company;
       document.getElementById('expIDate').textContent = d.date;
-      document.getElementById('expIDesc').textContent = d.desc;
+      document.getElementById('expIDesc').innerHTML = d.desc;
       panel.style.opacity = '1';
       panel.style.pointerEvents = 'auto';
     }
@@ -1199,7 +1199,7 @@
       document.getElementById('expDRole').textContent = d.role;
       document.getElementById('expDCompany').textContent = d.company;
       document.getElementById('expDDate').textContent = d.date;
-      document.getElementById('expDDesc').textContent = d.desc;
+      document.getElementById('expDDesc').innerHTML = d.desc;
       var ov = document.getElementById('expOverlay');
       ov.style.display = 'block';
       requestAnimationFrame(function() { ov.style.opacity = '1'; });
