@@ -550,7 +550,7 @@
         <p id="expICompany" style="font-size:14px;font-weight:600;color:#FF6714;margin-bottom:4px;font-family:'Space Mono',monospace;"></p>
         <p id="expIDate" style="font-size:12px;font-family:'Space Mono',monospace;color:rgba(16,16,16,0.42);margin-bottom:18px;"></p>
         <div style="border-top:1px solid rgba(16,16,16,0.1);margin-bottom:18px;"></div>
-        <p id="expIDesc" style="font-size:13px;line-height:1.8;color:#101010;margin-bottom:0;font-family:'Space Mono',monospace;overflow:hidden;"></p>
+        <p id="expIDesc" style="font-size:13px;line-height:1.8;color:#101010;margin-bottom:0;font-family:'Space Mono',monospace;white-space:pre-line;overflow:hidden;"></p>
         <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:24px;">
           <button onclick="openExpFromPanel()" class="btn btn-orange" style="font-size:12px;">Full Details →</button>
           <button onclick="deselectExpCard()" style="background:none;border:none;cursor:pointer;font-size:12px;color:rgba(16,16,16,0.38);font-family:'Space Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;padding:0;transition:color 0.15s;" onmouseenter="this.style.color='#101010'" onmouseleave="this.style.color='rgba(16,16,16,0.38)'">× Close</button>
@@ -657,7 +657,7 @@
             <h2 id="expDRole" style="font-size:clamp(26px,3vw,40px);font-weight:700;text-transform:uppercase;letter-spacing:-0.03em;line-height:1;margin-bottom:10px;color:#101010;"></h2>
             <p id="expDCompany" style="font-size:15px;font-weight:600;color:#FF6714;margin-bottom:5px;"></p>
             <p id="expDDate" style="font-size:12px;font-family:'Space Mono',monospace;color:rgba(16,16,16,0.42);margin-bottom:26px;"></p>
-            <p id="expDDesc" style="font-size:14px;line-height:1.85;color:#101010;"></p>
+            <p id="expDDesc" style="font-size:14px;line-height:1.85;color:#101010;white-space:pre-line;"></p>
           </div>
         </div>
       </div>
@@ -1080,7 +1080,7 @@
       {
         tag: 'Law Firm', role: 'Junior Associate', company: 'Hillbridges',
         date: '08/2023 – 10/2024 · Bratislava',
-        desc: 'Boutique firm founded by ex-Linklaters partners, ranked by Chambers Europe. Focused on M&A, financing, insolvency and restructuring across CEE.<ul style="margin-top:10px;padding-left:18px;list-style:disc;line-height:2;"><li>Advised an international steel and mining group on a potential billion-dollar acquisition, including comprehensive due diligence of the target entity and its subsidiaries.</li><li>Drafted litigation documents including claims for damages arising from EU law violations and responses in reminder proceedings.</li><li>Prepared corporate contract amendments and submissions in disputes concerning the validity of general meeting resolutions.</li><li>Conducted complex legal research across multiple practice areas.</li></ul>',
+        desc: 'Boutique firm founded by ex-Linklaters partners, ranked by Chambers Europe. Focused on M&A, financing, insolvency and restructuring across CEE.\n\n• Advised an international steel and mining group on a potential billion-dollar acquisition, including comprehensive due diligence of the target entity and its subsidiaries.\n• Drafted litigation documents including claims for damages arising from EU law violations and responses in reminder proceedings.\n• Prepared corporate contract amendments and submissions in disputes concerning the validity of general meeting resolutions.\n• Conducted complex legal research across multiple practice areas.',
         bg: '#F5EFE4',
         visHtml: '<img src="images/f8818cd-logocmyk-1.jpg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:82%;height:auto;" />'
       },
@@ -1094,21 +1094,21 @@
       {
         tag: 'Law Firm', role: 'Paralegal', company: 'HAVEL & Partners',
         date: '10/2021 – 02/2022 · Bratislava',
-        desc: 'The largest independent law firm in the Czech Republic and Slovakia, one of the fastest-growing in CEE.<ul style="margin-top:10px;padding-left:18px;list-style:disc;line-height:2;"><li>Supported lawyers across corporate, IP, technology, employment, and pharmaceutical law.</li><li>Prepared legal documents, including contracts and public procurement offers.</li><li>Conducted legal research and liaised with Courts, Ministries, and the Commercial Registry.</li></ul>',
+        desc: 'The largest independent law firm in the Czech Republic and Slovakia, one of the fastest-growing in CEE.\n\n• Supported lawyers across corporate, IP, technology, employment, and pharmaceutical law.\n• Prepared legal documents, including contracts and public procurement offers.\n• Conducted legal research and liaised with Courts, Ministries, and the Commercial Registry.',
         bg: '#111111',
         visHtml: '<img src="images/HP_EN_logo_inverzni-768x400.jpg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72%;height:auto;" />'
       },
       {
         tag: 'Startup', role: 'Sales Specialist', company: 'NeoHealth s.r.o.',
         date: '09/2019 – 01/2020',
-        desc: 'Medical software developer.<ul style="margin-top:10px;padding-left:18px;list-style:disc;line-height:2;"><li>Built and maintained relationships with customers.</li><li>Negotiated and closed sales deals.</li><li>Served as feedback channel between customers and product team, relaying user needs that informed product development.</li></ul>',
+        desc: 'Medical software developer.\n\n• Built and maintained relationships with customers.\n• Negotiated and closed sales deals.\n• Served as feedback channel between customers and product team, relaying user needs that informed product development.',
         bg: '#D4560E',
         visHtml: '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><span style="font-size:88px;font-weight:700;color:rgba(255,255,255,0.12);font-family:\'DM Sans\',sans-serif;letter-spacing:-0.04em;">NEO</span></div>'
       },
       {
         tag: 'Law Office', role: 'Paralegal', company: 'JUDr. Miloš Baranec',
         date: '01/2021 – 09/2021 · Banská Bystrica',
-        desc: 'Private law office specialising in commercial, civil, and administrative law.<ul style="margin-top:10px;padding-left:18px;list-style:disc;line-height:2;"><li>Conducted legal research in commercial, civil, and public law.</li><li>Worked on administrative law cases involving construction, workplace safety, and land expropriation.</li><li>Handled stock registrations with the Central Securities Depository of the Slovak Republic.</li></ul>',
+        desc: 'Private law office specialising in commercial, civil, and administrative law.\n\n• Conducted legal research in commercial, civil, and public law.\n• Worked on administrative law cases involving construction, workplace safety, and land expropriation.\n• Handled stock registrations with the Central Securities Depository of the Slovak Republic.',
         bg: '#2C2C2C',
         visHtml: '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><span style="font-size:72px;font-weight:700;color:rgba(255,255,255,0.1);font-family:\'DM Sans\',sans-serif;letter-spacing:-0.04em;">JMB</span></div>'
       }
@@ -1171,7 +1171,7 @@
       document.getElementById('expIRole').textContent = d.role;
       document.getElementById('expICompany').textContent = d.company;
       document.getElementById('expIDate').textContent = d.date;
-      document.getElementById('expIDesc').innerHTML = d.desc;
+      document.getElementById('expIDesc').textContent = d.desc;
       panel.style.opacity = '1';
       panel.style.pointerEvents = 'auto';
     }
@@ -1199,7 +1199,7 @@
       document.getElementById('expDRole').textContent = d.role;
       document.getElementById('expDCompany').textContent = d.company;
       document.getElementById('expDDate').textContent = d.date;
-      document.getElementById('expDDesc').innerHTML = d.desc;
+      document.getElementById('expDDesc').textContent = d.desc;
       var ov = document.getElementById('expOverlay');
       ov.style.display = 'block';
       requestAnimationFrame(function() { ov.style.opacity = '1'; });
