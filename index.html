@@ -375,6 +375,15 @@
       #expScene      { display: none !important; }
       #expMobileList { display: flex !important; }
     }
+
+    /* tablets and wide mobile (768–1100px) — card fan breaks, use list + stack podcast */
+    @media (max-width: 1100px) {
+      #expInfoPanel  { display: none !important; }
+      #expScene      { display: none !important; }
+      #expMobileList { display: flex !important; }
+      .motivation-section { padding: 40px 20px !important; }
+      .motivation-grid    { grid-template-columns: 1fr !important; gap: 28px !important; }
+    }
   </style>
 </head>
 <body class="font-sans text-onyx bg-white" style="color:#101010;">
