@@ -1080,6 +1080,7 @@
       {
         tag: 'Law Firm', role: 'Junior Associate', company: 'Hillbridges',
         date: '08/2023 – 10/2024 · Bratislava',
+        summary: 'Boutique firm founded by ex-Linklaters partners, ranked by Chambers Europe. M&A, financing, insolvency and restructuring across CEE.',
         desc: 'Boutique firm founded by ex-Linklaters partners, ranked by Chambers Europe. Focused on M&A, financing, insolvency and restructuring across CEE.\n\n• Advised an international steel and mining group on a potential billion-dollar acquisition, including comprehensive due diligence of the target entity and its subsidiaries.\n• Drafted litigation documents including claims for damages arising from EU law violations and responses in reminder proceedings.\n• Prepared corporate contract amendments and submissions in disputes concerning the validity of general meeting resolutions.\n• Conducted complex legal research across multiple practice areas.',
         bg: '#F5EFE4',
         visHtml: '<img src="images/f8818cd-logocmyk-1.jpg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:82%;height:auto;" />'
@@ -1087,6 +1088,7 @@
       {
         tag: 'Law Firm', role: 'Student Associate', company: 'Hillbridges',
         date: '04/2023 – 07/2023',
+        summary: 'First exposure to a full law firm environment. Legal research, document drafting and client communication in a fast-paced transactional practice.',
         desc: 'First exposure to a full law firm environment. Assisted senior associates with legal research, document drafting and client communication in a fast-paced transactional practice.',
         bg: '#EDE7DC',
         visHtml: '<img src="images/f8818cd-logocmyk-1.jpg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:82%;height:auto;" />'
@@ -1094,6 +1096,7 @@
       {
         tag: 'Law Firm', role: 'Paralegal', company: 'HAVEL & Partners',
         date: '10/2021 – 02/2022 · Bratislava',
+        summary: 'The largest independent law firm in the Czech Republic and Slovakia. Worked across corporate, IP, technology, employment, and pharmaceutical law.',
         desc: 'The largest independent law firm in the Czech Republic and Slovakia, one of the fastest-growing in CEE.\n\n• Supported lawyers across corporate, IP, technology, employment, and pharmaceutical law.\n• Prepared legal documents, including contracts and public procurement offers.\n• Conducted legal research and liaised with Courts, Ministries, and the Commercial Registry.',
         bg: '#111111',
         visHtml: '<img src="images/HP_EN_logo_inverzni-768x400.jpg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72%;height:auto;" />'
@@ -1101,6 +1104,7 @@
       {
         tag: 'Startup', role: 'Sales Specialist', company: 'NeoHealth s.r.o.',
         date: '09/2019 – 01/2020',
+        summary: 'Medical software developer. Built customer relationships and served as a bridge between clients and the product team.',
         desc: 'Medical software developer.\n\n• Built and maintained relationships with customers.\n• Negotiated and closed sales deals.\n• Served as feedback channel between customers and product team, relaying user needs that informed product development.',
         bg: '#D4560E',
         visHtml: '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><span style="font-size:88px;font-weight:700;color:rgba(255,255,255,0.12);font-family:\'DM Sans\',sans-serif;letter-spacing:-0.04em;">NEO</span></div>'
@@ -1108,6 +1112,7 @@
       {
         tag: 'Law Office', role: 'Paralegal', company: 'JUDr. Miloš Baranec',
         date: '01/2021 – 09/2021 · Banská Bystrica',
+        summary: 'Private law office in Banská Bystrica. Legal research across commercial, civil, and administrative law.',
         desc: 'Private law office specialising in commercial, civil, and administrative law.\n\n• Conducted legal research in commercial, civil, and public law.\n• Worked on administrative law cases involving construction, workplace safety, and land expropriation.\n• Handled stock registrations with the Central Securities Depository of the Slovak Republic.',
         bg: '#2C2C2C',
         visHtml: '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><span style="font-size:72px;font-weight:700;color:rgba(255,255,255,0.1);font-family:\'DM Sans\',sans-serif;letter-spacing:-0.04em;">JMB</span></div>'
@@ -1171,7 +1176,7 @@
       document.getElementById('expIRole').textContent = d.role;
       document.getElementById('expICompany').textContent = d.company;
       document.getElementById('expIDate').textContent = d.date;
-      document.getElementById('expIDesc').textContent = d.desc;
+      document.getElementById('expIDesc').textContent = d.summary;
       panel.style.opacity = '1';
       panel.style.pointerEvents = 'auto';
     }
