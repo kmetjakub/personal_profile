@@ -322,9 +322,7 @@
       #experience { padding-top: 40px !important; overflow: visible !important; }
       #experience > div:first-child { padding: 0 20px 28px !important; flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
       #experience > div:first-child p { display: none !important; }
-      #experience > div:nth-child(2) { display: block !important; padding: 0 20px 40px !important; min-height: unset !important; }
-      #expInfoPanel { display: none !important; }
-      #expScene { display: none !important; }
+      #expDesktop    { display: none !important; }
       #expMobileList { display: flex !important; }
 
       /* AI & Tooling split */
@@ -371,15 +369,13 @@
 
     /* landscape phones — force mobile list instead of 3D card fan */
     @media (max-width: 900px) and (orientation: landscape) {
-      #expInfoPanel  { display: none !important; }
-      #expScene      { display: none !important; }
+      #expDesktop    { display: none !important; }
       #expMobileList { display: flex !important; }
     }
 
     /* tablets and wide mobile (768–1100px) — card fan breaks, use list + stack podcast */
     @media (max-width: 1100px) {
-      #expInfoPanel  { display: none !important; }
-      #expScene      { display: none !important; }
+      #expDesktop    { display: none !important; }
       #expMobileList { display: flex !important; }
       .motivation-section { padding: 40px 20px !important; }
       .motivation-grid    { grid-template-columns: 1fr !important; gap: 28px !important; }
@@ -557,7 +553,7 @@
     </div>
 
     <!-- two-column body: info panel + card fan -->
-    <div style="display:flex; align-items:center; padding-bottom:100px; min-height:520px;">
+    <div id="expDesktop" style="display:flex; align-items:center; padding-bottom:100px; min-height:520px;">
 
       <!-- LEFT: info panel (hidden until card selected) -->
       <div id="expInfoPanel" style="width:380px; flex-shrink:0; padding:0 48px 0 64px; opacity:0; transition:opacity 0.38s ease; pointer-events:none;">
